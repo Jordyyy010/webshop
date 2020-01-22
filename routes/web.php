@@ -20,3 +20,5 @@ Route::get('/product/{product}', 'ProductController@show');
 Route::get('/products/index', 'ProductController@index');
 Route::get('/categories/{categories}', 'CategoriesController@show');
 Route::get('/orders', 'ordersController@index');
+
+Route::get('/cart/index', 'OrderProductController@index');

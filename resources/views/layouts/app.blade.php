@@ -19,6 +19,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/all.css') }}" rel="stylesheet">
+
 </head>
 <body>
 <?php 
@@ -60,8 +62,8 @@ $categories = Categories::all();
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         <li class="nav-item">
-                            <a class="nav-item" href="#">
-                                <i class="fas fa-shopping-cart"></i>
+                            <a class="nav-item" href="/cart/index">
+                                Shopping Cart
                             </a>
                         </li>
                         @guest
