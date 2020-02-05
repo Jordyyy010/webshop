@@ -16,6 +16,7 @@
                         <a href="{{action('ProductController@show', ['id' => $product->id])}}">{{ $product->name }}</a>
                         <p class="card-text">{{ $product->description }}</p>
                         <p class="card-text">€{{ $product->amount }}</p>
+                        <a href="{{action('ProductController@addToCart', ['$id' => $product->id])}}" class="btn btn-success pull-right" role="button">Add to cart</a>
                     </div>
                 </div>
             </div>

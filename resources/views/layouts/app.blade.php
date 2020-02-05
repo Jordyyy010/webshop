@@ -62,8 +62,9 @@ $categories = Categories::all();
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         <li class="nav-item">
-                            <a class="nav-item" href="/cart/index">
+                            <a class="nav-item" href="/shopping-cart">
                                 Shopping Cart
+                                <span class="badge">( {{ Session::has('cart') ? Session::get('cart')->totalQty : '' }} )</span>
                             </a>
                         </li>
                         @guest

@@ -11,3 +11,7 @@
 .shoppingcart{
     padding-top: 30px;
 }
+
+.quantityCounter{
+    width: 8%;
+}

@@ -17,13 +17,12 @@ class CreateOrderProductsTable extends Migration
             $table->bigIncrements('id');
 
             $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('order_id');
             $table->unsignedInteger('product_name');
             $table->unsignedDecimal('price', 8, 2);
             $table->binary('quantity');
 
             $table->timestamps();
-
-            $table->foreign('product_id')->references('id')->on('products');
         });
     }
 

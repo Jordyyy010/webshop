@@ -16,9 +16,20 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Auth::routes();
 
+// Product routes
 Route::get('/product/{product}', 'ProductController@show');
 Route::get('/products/index', 'ProductController@index');
+// Category
 Route::get('/categories/{categories}', 'CategoriesController@show');
-Route::get('/orders', 'ordersController@index');
 
-Route::get('/cart/index', 'OrderProductController@index');
+// Resources
+Route::get('/products', 'ProductController@destroy');
+Route::resource('/orders', 'OrderProductController');
+
+
+// Shopping-Cart
+Route::get('/add-to-cart/{id}', 'ProductController@addToCart');
+Route::get('/shopping-cart', 'ProductController@Cart');
+Route::get('/checkout', 'ProductController@Checkout');
+
+Route::post('/checkout', 'ProductController@PostCheckout');
