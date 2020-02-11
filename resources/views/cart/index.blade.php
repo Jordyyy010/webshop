@@ -19,20 +19,38 @@
                 </tr>
             </thead>
             @foreach($products as $product)
-            <tbody>
-                <tr>
-                <th scope="row">{{ $product['item']['id'] }}</th>
-                <td>{{ $product['item']['name'] }}</td>
-                <td>€ {{ $product['price'] }}</td>
-                <td><input class="quantityCounter" type="number" data-val="{{ $product['qty'] }}" data-id="{{ $product['item']['id'] }}" value="{{ $product['qty'] }}"></td>
-                <td><form action="{{ action('ProductController@destroy', ['id' => $product['item']['id']]) }}" method="get">    
-                            @method('DELETE')
-                            @csrf
-                            <button type="submit" class="btn btn-danger" >X</button>
-                        </form></td>
-                </tr>
-            </tbody>
+                <tbody>
+                    <tr>
+                        <th scope="row">{{ $product['item']['id'] }}</th>
+                        <td>{{ $product['item']['name'] }}</td>
+                        <td>€ {{ $product['price'] }}</td>
+                        <td>
+                            <form action="{{action('CartController@update', ['$id' => $product['item']['id']])}}" method="post">
+                                <input class="quantityCounter" type="number" value="{{ $product['qty'] }}" name="changeQty">
+                                <button type="submit" class="btn btn-success">Change quantity</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/shopping-cart/destroyItem/{{ $product['item']['id']}}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-danger" >X</button>
+                            </form>
+                        </td>
+                    </tr>
             @endforeach
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <form action="/shopping-cart/destroyCart" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Clear All</button>                            
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
         </table>
 
     </div>
@@ -43,7 +61,7 @@
     </div>
     <div class="row">
         <div class="col-md-6 col-sm-6 col-md-offset-3 col-sm-offset-3">
-            <a href="/checkout" class="btn btn-success" type="button">Bestel</a>
+            <a href="/shopping-cart/checkout" class="btn btn-success" type="button">Bestel</a>
         </div>
     </div>
     @else

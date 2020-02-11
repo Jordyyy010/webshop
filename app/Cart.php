@@ -3,6 +3,7 @@
 namespace App;
 
 use Session;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Cart
@@ -12,9 +13,9 @@ class Cart
     public $totalPrice = 0;     //  Total price
 
     public function __construct() {
-        $oldCart = Session::get('cart');
+        $oldCart = Session::get('cart');        //  waar staan de :: voor
         if($oldCart){   //  If there is an old cart made, copy the last cart details
-            $this->items = $oldCart->items;
+            $this->items = $oldCart->items;     // Wat betekend $this 
             $this->totalQty = $oldCart->totalQty;
             $this->totalPrice = $oldCart->totalPrice;
         } else {
@@ -41,7 +42,40 @@ class Cart
         session()->put('cart', $this);
     }
 
-    public function remove($id){
+    public function update($id, $item){
+        $cart = Session::get('cart');
+        $qty = (int)$_GET['changeQty'];
+
+        if($qty == 0) {
+            $this->totalQty -= $quantity;
+            $this->totalPrice -= $item['amount'];
+            unset($this->items[$id]);
+        } else {
+            if($qty < $this->items[$id]['qty']) {
+                $this->totalQty -= $qty;
+                $this->totalPrice -= $item['amount'];
+                $this->items[$id]['qty'] -= $qty;
+                $this->items[$id]['price'] -= $item['amount'];
+                session()->put('cart', $this);            
+            } else {
+                $this->totalQty += $qty;
+                $this->totalPrice += $item['amount'];
+                $this->items[$id]['qty'] += $qty;
+                $this->items[$id]['price'] += $item['amount'];
+                sesstion()->put('cart', $this);
+            }
+        }
+
+        session()->put('cart', $cart);
+    }
+
+    public function removeItem($id){
+        $products = session()->get($id);
         unset($this->items[$id]);
+        session()->put('cart', $products);
+    }
+
+    public function removeCart(){
+        session()->flush();
     }
 }

@@ -9,7 +9,6 @@
     {{ $data->links() }}
     <div class="row">
     @foreach($data as $product)
-    
         <div class="col-md-4 productForm">
             <div class="card">
                 <img class="card-img-top img-fluid ImageProduct" src="/img/{{ $product->image }}" alt="image">
@@ -17,7 +16,7 @@
                     <a href="{{action('ProductController@show', ['id' => $product->id])}}">{{ $product->name }}</a>
                     <p class="card-text">{{ $product->description }}</p>
                     <p class="card-text">€{{ $product->amount }}</p>
-                    <a href="{{action('ProductController@addToCart', ['$id' => $product->id])}}" class="btn btn-success pull-right" role="button">Add to cart</a>
+                    <a href="{{action('CartController@addToCart', ['$id' => $product->id])}}" class="btn btn-success pull-right" role="button">Add to cart</a>
                 </div>
             </div>
         </div>

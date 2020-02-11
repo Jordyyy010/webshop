@@ -12,9 +12,11 @@
                     <div class="card">
                         @foreach($order->cart->items as $item)                            
                             <div class="card-body">
-                                <p class="card-text">{{ $item['item']['title'] }}</a>
-                                <p class="card-text">€{{ $item['price'] }}</p>
-                                <p class="card-text">{{ $item['qty'] }}</p>
+                                <div style="border-bottom:1px solid black;">
+                                    <p class="card-text">{{ $item['item']['name'] }}</a>
+                                    <p class="card-text">€{{ $item['price'] }}</p>
+                                    <p class="card-text">{{ $item['qty'] }}</p>
+                                </div>
                             </div>
                         @endforeach
                     </div>

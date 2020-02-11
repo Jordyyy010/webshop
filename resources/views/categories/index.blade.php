@@ -3,9 +3,6 @@
 @section('content')
 
 <div class="container">
-    <div class="row justify-content-center">
-        <h1><strong>Categorie Naam</strong></h1>
-    </div>
     <div class="row">
     @foreach($products as $product)
         <div class="col-md-4 productForm">
@@ -16,7 +13,7 @@
                         <a href="{{action('ProductController@show', ['id' => $product->id])}}">{{ $product->name }}</a>
                         <p class="card-text">{{ $product->description }}</p>
                         <p class="card-text">€{{ $product->amount }}</p>
-                        <a href="{{action('ProductController@addToCart', ['$id' => $product->id])}}" class="btn btn-success pull-right" role="button">Add to cart</a>
+                        <a href="{{action('CartController@addToCart', ['$id' => $product->id])}}" class="btn btn-success pull-right" role="button">Add to cart</a>
                     </div>
                 </div>
             </div>

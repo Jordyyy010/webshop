@@ -23,13 +23,15 @@ Route::get('/products/index', 'ProductController@index');
 Route::get('/categories/{categories}', 'CategoriesController@show');
 
 // Resources
-Route::get('/products', 'ProductController@destroy');
 Route::resource('/orders', 'OrderProductController');
 
 
 // Shopping-Cart
-Route::get('/add-to-cart/{id}', 'ProductController@addToCart');
-Route::get('/shopping-cart', 'ProductController@Cart');
-Route::get('/checkout', 'ProductController@Checkout');
+Route::get('/add-to-cart/{id}', 'CartController@addToCart');
+Route::get('/shopping-cart', 'CartController@Cart');
+Route::get('/shopping-cart/checkout', 'CartController@Checkout');
+Route::post('/shopping-cart/checkout', 'CartController@PostCheckout');
+Route::post('/shopping-cart/update/{id}', 'CartController@update');
+Route::post('/shopping-cart/destroyItem/{id}', 'CartController@destroyItem');
+Route::post('/shopping-cart/destroyCart', 'CartController@destroyCart');
 
-Route::post('/checkout', 'ProductController@PostCheckout');
