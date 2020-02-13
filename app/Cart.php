@@ -39,7 +39,7 @@ class Cart
         $this->totalQty++;  //  Increase overall quantity
         $this->totalPrice += $storedItem['price'];  //  Totalprice + the item price
 
-        session()->put('cart', $this);
+        Session::put('cart', $this);
     }
 
     public function update($id, $item){
@@ -56,26 +56,32 @@ class Cart
                 $this->totalPrice -= $item['amount'];
                 $this->items[$id]['qty'] -= $qty;
                 $this->items[$id]['price'] -= $item['amount'];
-                session()->put('cart', $this);            
+                Session::put('cart', $this);            
             } else {
                 $this->totalQty += $qty;
                 $this->totalPrice += $item['amount'];
                 $this->items[$id]['qty'] += $qty;
                 $this->items[$id]['price'] += $item['amount'];
-                sesstion()->put('cart', $this);
+                Sesstion::put('cart', $this);
             }
         }
 
-        session()->put('cart', $cart);
+        Session::put('cart', $cart);
     }
 
     public function removeItem($id){
-        $products = session()->get($id);
-        unset($this->items[$id]);
-        session()->put('cart', $products);
+        $cart = Session::get('cart');
+        unset($cart->items[$id]);
+        $cart->totalPrice -= $this->items[$id]['price'];
+        $cart->totalQty -= 1;
+        if($cart->totalQty <= 0){
+            Session::flush();
+        } else {
+            Session::put('cart', $cart);
+        }
     }
 
     public function removeCart(){
-        session()->flush();
+        Session::flush();
     }
 }

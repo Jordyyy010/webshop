@@ -15,7 +15,6 @@ class CartController extends Controller
         $product = Product::find($id);  //  Get product data
         $cart = new Cart(); //  Add cart
         $cart->add($product, $product->id); //  Add item to cart class
-
         $request->session()->put('cart', $cart);    //  Put the cart class in a laravel session
         return redirect('products/index');  //  Link back to the page
     }
