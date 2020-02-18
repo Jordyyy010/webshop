@@ -11,11 +11,16 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
-                <th scope="col"></th>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">
+                        <form action="/shopping-cart/destroyCart" method="POST">
+                            @csrf
+                            <button class="btn btn-danger" type="submit">Clear All</button>
+                        </form>
+                    </th>
                 </tr>
             </thead>
             @foreach($products as $product)
@@ -26,8 +31,8 @@
                         <td>€ {{ $product['price'] }}</td>
                         <td>
                             <form action="{{action('CartController@update', ['$id' => $product['item']['id']])}}" method="post">
-                                <input class="quantityCounter" type="number" value="{{ $product['qty'] }}" name="changeQty">
-                                <button type="submit" class="btn btn-success">Change quantity</button>
+                                @csrf
+                                <input class="quantityCounter" min="0" type="number" value="{{ $product['qty'] }}" name="changeQty">
                             </form>
                         </td>
                         <td>
@@ -40,29 +45,16 @@
             @endforeach
                     <tr>
                         <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>Total Price:</td>
+                        <td>€ {{ $totalPrice }}</td>
                         <td></td>
                         <td>
-                            <form action="/shopping-cart/destroyCart" method="POST">
-                                @csrf
-                                <button type="submit" class="btn btn-danger">Clear All</button>                            
-                            </form>
+                            <a href="/shopping-cart/checkout" class="btn btn-success" type="button">Bestel</a>
                         </td>
                     </tr>
                 </tbody>
         </table>
 
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-sm-6 col-md-offset-3 col-sm-offset-3">
-            <strong>Total Price:€ {{ $totalPrice }}</strong>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-sm-6 col-md-offset-3 col-sm-offset-3">
-            <a href="/shopping-cart/checkout" class="btn btn-success" type="button">Bestel</a>
-        </div>
     </div>
     @else
     <div class="container">

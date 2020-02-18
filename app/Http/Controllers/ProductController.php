@@ -13,13 +13,15 @@ class ProductController extends Controller
     {
         $categories = Categories::all();
         $products = DB::table('products')->get();
-        return view('products.show', ['products' => $products, 'categories'=>$categories]);
+        return view('products.show')->with([
+            'product' => $product,
+            'categories'=>$categories
+        ]);
     }
 
     public static function index()
     {
-        $categories = Categories::all();
         $data = DB::table('products')->paginate(9);
-        return view('products.index', ['data'=>$data, 'categories'=> $categories]);
+        return view('products.index', ['data'=>$data]);
     }
 }

@@ -7,19 +7,16 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <a class="nav-link" href="{{ URL::to('products/index') }}">Back to products</a>
+                    <a class="nav-link" href="{{ URL::to('/') }}">Back to products</a>
                 </div>
                 <div class="card-body">
-                    <div class="form-group row">
-                        <div class="col-md-8">
-                            @foreach($products as $product)
-                            <h1>{{ $product->name }}</h1>
-                            <p><strong>Description: {{ $product->description }}</strong></p>
-                            <img class="card-img-top img-fluid ImageProduct" src="/img/{{ $product->image }}" alt="Image">
-                            <p>€{{ $product->amount }}</p>
-
-                            @endforeach
-                        </div>
+                    <div class="col-md-8">
+                        <h1>{{ $product->name }}</h1>
+                        <p><strong>Description: {{ $product->description }}</strong></p>
+                        <img class="card-img-top img-fluid ImageProduct" src="/img/{{ $product->image }}" alt="Image">
+                        <br><br>
+                        <p>€{{ $product->amount }}</p>
+                        <a href="{{action('CartController@addToCart', ['$id' => $product->id])}}" class="btn btn-success pull-right" role="button">Add to cart</a>
                     </div>
                 </div>
             </div>

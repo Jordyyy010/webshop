@@ -3,31 +3,24 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="card-body">
-            <div class="alert alert-succes">
-                <h1>Uw orders</h1>
-            </div>
-            @foreach($orders as $order)
-                <div class="col-md-4 productForm">
-                    <div class="card">
-                        @foreach($order->cart->items as $item)                            
-                            <div class="card-body">
-                                <div style="border-bottom:1px solid black;">
-                                    <p class="card-text">{{ $item['item']['name'] }}</a>
-                                    <p class="card-text">€{{ $item['price'] }}</p>
-                                    <p class="card-text">{{ $item['qty'] }}</p>
-                                </div>
-                            </div>
-                        @endforeach
+        <h1><strong>Uw Orders</strong></h1>
+    </div>
+    <div class="row">
+    @foreach($orders as $order)
+        <div class="col-md-4 productForm">
+            <div class="card">
+                @foreach($order->cart->items as $item)                            
+                    <div class="card-body">
+                        <p class="card-text">{{ $item['item']['name'] }}</a>
+                        <p class="card-text"><strong>Product prijs : </strong>€{{ $item['price'] }} <strong>Aantal </strong>{{ $item['qty'] }} x</p>
                     </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <strong>Totaal: €{{ $order->cart->totalPrice }}</strong>
-                        </div>
-                    </div>
+                @endforeach
+                <div class="card-body"  style="border-top:1px solid black;">
+                    <strong>Totaal: €{{ $order->cart->totalPrice }}</strong>
                 </div>
-            @endforeach
+            </div>
         </div>
+    @endforeach
     </div>
 </div>
 @endsection
