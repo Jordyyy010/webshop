@@ -7,7 +7,6 @@ use App\Cart;
 use App\Orders;
 use Auth;
 use Session;
-use Validator;
 
 class OrderController extends Controller
 {
@@ -61,32 +60,16 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        // The rules that the information needs to abide by
-        // $rules = array(
-        //     'name' => 'required',
-        //     'adress' => 'required'
-        // );
+        $cart = new Cart();
+        $order = new Orders();
+        $order->cart = serialize($cart);
+        $order->name = $request->input('name');
+        $order->adress = $request->input('adress');
+        $order->total_price = $cart->totalPrice;
 
-        // Validate the information
-        // $validator = Validator::make($request->all(), $rules);
-        // What to do if validation fails
-        // if($validator->fails()){
-        //     return redirect(url()->previous())
-        //                 ->withErrors($validator)
-        //                 ->withInput();
-        // } else {
-            $cart = new Cart();
-            $order = new Orders();
-            $order->cart = serialize($cart);
-            $order->name = $request->input('name');
-            $order->adress = $request->input('adress');
-            $order->total_price = $cart->totalPrice;
-
-            $cart->totalPrice = 0;
-            Auth::user()->orders()->save($order);
-            Session::forget('cart');
-        // }
-
+        $cart->totalPrice = 0;
+        Auth::user()->orders()->save($order);
+        Session::forget('cart');
         return redirect('/');
     }
 
