@@ -18,7 +18,7 @@ class CreateOrderTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->decimal('total_price');
             $table->text('cart');
-            $table->text('adress');
+            $table->text('address');
             $table->string('name');
             $table->timestamps();
         });
