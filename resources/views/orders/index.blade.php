@@ -7,16 +7,18 @@
     </div>
     <div class="row">
     @foreach($orders as $order)
+
         <div class="col-md-4 productForm">
             <div class="card">
-                @foreach($order->cart->items as $item)                            
-                    <div class="card-body">
-                        <p class="card-text">{{ $item['item']['name'] }}</a>
-                        <p class="card-text"><strong>Product prijs : </strong>€{{ $item['price'] }} <strong>Aantal </strong>{{ $item['qty'] }} x</p>
-                    </div>
+                <div class="card-header">Order #{{$order['id']}}</div>
+                @foreach($order->orderProduct as $orderProduct)
+                <div class="card-body">
+                    <p class="card-text">{{ $orderProduct->product->name }}</a>
+                    <p class="card-text"><strong>Product prijs : </strong>€{{ $orderProduct->price }} <strong>Aantal </strong>{{ $orderProduct->qty }} x</p>
+                </div>
                 @endforeach
                 <div class="card-body"  style="border-top:1px solid black;">
-                    <strong>Totaal: €{{ $order->cart->totalPrice }}</strong>
+                    <strong>Totaal: €{{ $order->total_price }}</strong>
                 </div>
             </div>
         </div>

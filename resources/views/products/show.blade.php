@@ -16,7 +16,7 @@
                         <img class="card-img-top img-fluid ImageProduct" src="/img/{{ $product->image }}" alt="Image">
                         <br><br>
                         <p>€{{ $product->amount }}</p>
-                        <a href="{{action('CartController@addToCart', ['$id' => $product->id])}}" class="btn btn-success pull-right" role="button">Add to cart</a>
+                        <a href="{{action('CartController@store', ['$id' => $product->id])}}" class="btn btn-success pull-right" role="button">Add to cart</a>
                     </div>
                 </div>
             </div>

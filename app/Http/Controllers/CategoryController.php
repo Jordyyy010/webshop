@@ -3,21 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Cart;
-use App\Order;
-use App\OrderProduct;
+use App\Category;
 use App\Product;
-use Auth;
-use Session;
 
-class OrderController extends Controller
+class CategoryController extends Controller
 {
-    public $cart;
-    public function __construct(){
-        $this->middleware('auth');
-        $this->cart = new Cart();
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -25,9 +15,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $orders = $user->order;
-        return view('orders.index', ['orders' => $orders]);
+        //
     }
 
     /**
@@ -37,10 +25,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        $cart = new Cart();
-        $user = Auth::user();
-        $total = $cart->totalPrice;
-        return view('orders/checkout', ['total' => $total, 'user' => $user]);
+        //
     }
 
     /**
@@ -51,27 +36,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $user = Auth::user();
-        $products = Cart::show();
-        $order = new Order();
-        //  Set values for order_table
-        $order->user_id = $user->id;
-        $order->total_price = 0;
-        $order->save();
-        //  Saves as many rows as different products must be stored with same order_id
-        foreach($products as $product) {
-            $orderProduct = new OrderProduct();
-            $orderProduct->order_id = $order->id;
-            $orderProduct->product_id = $product->id;   
-            $orderProduct->price += $product->productTtl;
-            $orderProduct->qty = $product->quantity;
-            $order->total_price += $orderProduct->price;
-            $orderProduct->save();
-        }        
-        $order->save();
-
-        Session::forget('cart');
-        return redirect('/');
+        //
     }
 
     /**
@@ -80,9 +45,13 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Category $category)
     {
-        //
+        $products = $category->product;  //  matching results of the id from category with the Product->categorie_id
+        return view('categories.index', [
+            'categories' => Product::findOrFail($category),
+            'products' => $products,
+        ]);
     }
 
     /**
@@ -119,3 +88,5 @@ class OrderController extends Controller
         //
     }
 }
+
+// public function show(Category $category){

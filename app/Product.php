@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    public function categories()
+    public function category()
     {
-        return $this->belongsTo('App\Categories');
+        return $this->belongsTo('App\Category');
     }
 
     public function orderProduct() {

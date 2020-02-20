@@ -20,18 +20,20 @@ Auth::routes();
 Route::get('/product/{product}', 'ProductController@show');
 
 // Category
-Route::get('/categories/{categories}', 'CategoriesController@show');
+Route::get('/category/{category}', 'CategoryController@show');
 
 // Resources
 Route::resource('/orders', 'OrderController');
 
 
 // Shopping-Cart
-Route::get('/add-to-cart/{id}', 'CartController@addToCart');
 Route::get('/shopping-cart', 'CartController@index');
-Route::get('/shopping-cart/checkout', 'OrderController@bestel');
-Route::post('/shopping-cart/checkout', 'OrderController@store');
+Route::get('/shopping-cart/store/{id}', 'CartController@store');
 Route::post('/shopping-cart/update/{id}', 'CartController@update');
-Route::post('/shopping-cart/destroyItem/{id}', 'CartController@destroyItem');
+Route::post('/shopping-cart/destroy/{id}', 'CartController@destroy');
 Route::post('/shopping-cart/destroyCart', 'CartController@destroyCart');
+
+Route::get('/shopping-cart/checkout', 'OrderController@create');
+Route::post('/shopping-cart/order', 'OrderController@store');
+
 

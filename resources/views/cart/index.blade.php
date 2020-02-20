@@ -36,7 +36,7 @@
                             </form>
                         </td>
                         <td>
-                            <form action="/shopping-cart/destroyItem/{{ $product['item']['id']}}" method="POST">
+                            <form action="/shopping-cart/destroy/{{ $product['item']['id']}}" method="POST">
                                 @csrf
                                 <button type="submit" class="btn btn-danger" >X</button>
                             </form>

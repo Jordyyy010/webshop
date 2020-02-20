@@ -24,9 +24,9 @@
 </head>
 <body>
 <?php 
-use App\Categories;
+use App\Category;
 
-$categories = Categories::all();
+$category = Category::all();
 
 ?>
 
@@ -45,8 +45,8 @@ $categories = Categories::all();
                             Categorieën
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            @foreach($categories as $categorie)
-                                <a class="dropdown-item" href="/categories/{{ $categorie->id }}">{{ $categorie->name }}</a>
+                            @foreach($category as $categorie)
+                                <a class="dropdown-item" href="/category/{{ $categorie->id }}">{{ $categorie->name }}</a>
                             @endforeach
                         </div>
                     </li>

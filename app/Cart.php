@@ -22,7 +22,7 @@ class Cart
             return view('products.index', ['products' => null]);
         }
     }
-
+    //  Add new item
     public function add($item, $id) {
         $storedItem = ['qty' => 0, 'price' => $item->amount, 'item' => $item];  //  New item data
         if($this->items) {      //  Are there any items in the cart
@@ -42,27 +42,27 @@ class Cart
     
         Session::put('cart', $this);
     }
-
+    //  Update item['id'] with new qty value
     public function update($id, $newQty){
         $cart = Session::get('cart');
-
+        // calculations of add/reduce
         $lessQty = $this->items[$id]['qty'] -= $newQty;
         $moreQty = $newQty -= $cart->items[$id]['qty'];
         $lessTotal = $this->items[$id]['price'] * $lessQty;
         $moreTotal = $this->items[$id]['price'] * $moreQty;
-
+        //  if == 0, destroy
         if($newQty == 0) {
             $cart->totalQty -= $lessQty;
             $cart->totalPrice -= $lessTotal;
             unset($cart->items[$id]);
             Session::put('cart', $cart);
-        } else {
+        } else {    //  else reduce values
             if($cart->items[$id]['qty'] > $newQty) {
                 $cart->totalQty -= $lessQty;
                 $cart->totalPrice -= $lessTotal;
                 $cart->items[$id]['qty'] -= $lessQty;
                 Session::put('cart', $cart);
-            } else {
+            } else {    //  or add values
                 $cart->totalQty += $moreQty;
                 $cart->totalPrice += $moreTotal;
                 $cart->items[$id]['qty'] += $moreQty;
@@ -70,10 +70,10 @@ class Cart
             }
         }
         if($cart->totalQty <= 0){
-            Session::flush();
+            Session::forget('cart');
         }
     }
-
+    // Removes unique item and reduce qty and total
     public function removeItem($id){
         $cart = Session::get('cart');
         unset($cart->items[$id]);
@@ -86,8 +86,20 @@ class Cart
             Session::put('cart', $cart);
         }
     }
+    // Removes session
+    public static function removeCart(){
+        Session::forget('cart');
+    }
 
-    public function removeCart(){
-        Session::flush();
+    public static function show(){
+        $cart = Session::get('cart');
+        foreach ($cart->items as $carts) {      //  All cart items values with total values
+            $product = Product::find($carts['item']['id']);     //  Find unique item
+            $product['quantity'] = $carts['qty'];   //  Qty of one item
+            $product['productTtl'] = $product['amount'] * $product['quantity'];     //  Ttl of one item
+            $products[] = $product;     //  Store values multiple times
+            $cart->totalPrice += $product['productTtl'];
+        }
+        return $products;
     }
 }
