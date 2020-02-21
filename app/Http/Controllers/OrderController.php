@@ -12,10 +12,8 @@ use Session;
 
 class OrderController extends Controller
 {
-    public $cart;
     public function __construct(){
         $this->middleware('auth');
-        $this->cart = new Cart();
     }
 
     /**
